@@ -8,7 +8,7 @@ async function main() {
   const basePath = process.cwd();
   const inputPath = path.resolve(basePath, "./media/symbols/");
   const outPutPath = path.resolve(basePath, "./output/");
-  const images = getImagesInDrectory(inputPath);
+  const images = await getImagesInDrectory(inputPath);
 
   const data: ImageData[] = [];
   for (const img of images) {

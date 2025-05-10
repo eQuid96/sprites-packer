@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import { readdir, access, constants } from "node:fs/promises";
 import { join, basename } from "path";
 import sharp from "sharp";
 
@@ -12,11 +12,11 @@ export type ImageData = {
   path: string;
 };
 
-export function getImagesInDrectory(dirPath: string) {
+export async function getImagesInDrectory(dirPath: string) {
   const result: { path: string; name: string; fullPath: string }[] = [];
   const validExtensions = ["png"];
-  if (fs.existsSync(dirPath)) {
-    var files = fs.readdirSync(dirPath, { withFileTypes: true });
+  if (await fileExist(dirPath)) {
+    const files = await readdir(dirPath, { withFileTypes: true });
     for (const file of files) {
       if (file.isDirectory()) {
         continue;
@@ -32,6 +32,15 @@ export function getImagesInDrectory(dirPath: string) {
   }
 
   return result;
+}
+
+async function fileExist(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath, constants.R_OK);
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 export async function getImageSize(image: Buffer) {
