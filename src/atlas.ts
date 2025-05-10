@@ -1,16 +1,16 @@
-import { MaxRectsPacker } from "maxrects-packer";
+import { MaxRectsPacker } from "./max-rects-packer";
 import sharp from "sharp";
 import { getImageSize, isTrimmed, type ImageData } from "./images";
 import { resolve } from "path";
 import fs from "node:fs";
 
 type AtlasSprite = {
-  width: number;
-  height: number;
-  x: number;
-  y: number;
-  rot: boolean;
-  imageData: ImageData;
+  readonly width: number;
+  readonly height: number;
+  readonly rot: boolean;
+  readonly x: number;
+  readonly y: number;
+  readonly imageData: ImageData;
 };
 
 type AtlasSprites = {
@@ -36,13 +36,7 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
   options.maxWidth = Math.min(options.maxWidth, 4096);
   options.maxHeight = Math.min(options.maxHeight, 4096);
 
-  const packer = new MaxRectsPacker<AtlasSprite>(options.maxWidth, options.maxHeight, options.padding, {
-    smart: true,
-    pot: true,
-    square: false,
-    allowRotation: true,
-    tag: false,
-  });
+  const packer = new MaxRectsPacker<AtlasSprite>(options.maxWidth, options.maxHeight);
 
   if (options.trim) {
     // trimm all images
@@ -68,12 +62,13 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
     };
   });
 
-  packer.addArray(packerData);
-  for (let i = 0; i < packer.bins.length; i++) {
-    const bin = packer.bins[i];
+  packer.pack(packerData);
+  const bins = packer.getBins();
+  for (let i = 0; i < bins.length; i++) {
+    const bin = bins[i];
     const imagesToPack: { input: Buffer; top: number; left: number }[] = [];
     const sprites: AtlasSprites = {};
-    for (const rect of bin.rects) {
+    for (const rect of bin.packedRects) {
       if (rect.rot) {
         //TODO: when a sprite is rotated width and height changes, check if we need to update them.
         rect.imageData.buffer = await sharp(rect.imageData.buffer).rotate(90).toBuffer();
@@ -119,7 +114,7 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
         ...sprites,
       },
       meta: {
-        app: "custom-packer",
+        app: "sprites-packer",
         image: atlasTextureName,
         scale: 1,
         format: "RGBA8888",
