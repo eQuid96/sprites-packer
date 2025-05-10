@@ -8,14 +8,16 @@
   "scripts": {
     "dev": "tsc -p tsconfig.json --watch",
     "build": "tsc -p tsconfig.json",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "clean": "rm -r ./dist"
   },
+  "packageManager": "npm@10.2.3",
   "bin": {
     "tpacker": "./dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.8.3"
   },
   "dependencies": {
     "maxrects-packer": "^2.7.3",
