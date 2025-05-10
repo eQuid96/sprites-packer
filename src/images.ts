@@ -15,7 +15,7 @@ export type ImageData = {
 export async function getImagesInDrectory(dirPath: string) {
   const result: { path: string; name: string; fullPath: string }[] = [];
   const validExtensions = ["png"];
-  if (await fileExist(dirPath)) {
+  if (await pathExist(dirPath)) {
     const files = await readdir(dirPath, { withFileTypes: true });
     for (const file of files) {
       if (file.isDirectory()) {
@@ -34,7 +34,7 @@ export async function getImagesInDrectory(dirPath: string) {
   return result;
 }
 
-async function fileExist(filePath: string): Promise<boolean> {
+export async function pathExist(filePath: string): Promise<boolean> {
   try {
     await access(filePath, constants.R_OK);
     return true;
