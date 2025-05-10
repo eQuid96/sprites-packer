@@ -119,7 +119,7 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
         ...sprites,
       },
       meta: {
-        app: "custom-packer",
+        app: "sprites-packer",
         image: atlasTextureName,
         scale: 1,
         format: "RGBA8888",

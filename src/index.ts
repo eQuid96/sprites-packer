@@ -6,14 +6,52 @@ import { getImageData } from "./images";
 import { mkdir } from "fs/promises";
 
 export type SpritePackerOptions = {
+  /**
+   * Directory path where source sprite images are located
+   */
   inputPath: string;
+  /**
+   * Directory path where the atlas image and metadata will be saved
+   */
   outputPath: string;
+  /**
+   * Maximum width of the generated atlas in pixels
+   */
   maxWidth: number;
+  /**
+   * Maximum height of the generated atlas in pixels
+   */
   maxHeight: number;
+  /**
+   * Number of pixels to insert between sprites in the atlas
+   */
   padding: number;
+  /**
+   * When true, transparent borders around sprites will be trimmed
+   */
   trim: boolean;
 };
 
+/**
+ * Packs individual sprite images into a single atlas image.
+ *
+ * This function processes images from a given input directory, arranges them efficiently into a sprite atlas,
+ * and saves the result to the specified output path. It can optionally trim transparent borders and add padding
+ * between sprites.
+ *
+ * @param options - Configuration options for the sprite packing process
+ * @param options.maxWidth - Maximum width of the generated atlas in pixels
+ * @param options.maxHeight - Maximum height of the generated atlas in pixels
+ * @param options.inputPath - Directory path where source sprite images are located
+ * @param options.outputPath - Directory path where the atlas image and metadata will be saved
+ * @param options.trim - When true, transparent borders around sprites will be trimmed
+ * @param options.padding - Number of pixels to insert between sprites in the atlas
+ *
+ * @throws Will throw an error if the input directory contains no images
+ * @throws Will throw an error if the options are invalid
+ *
+ * @returns Promise that resolves when the atlas generation is complete
+ */
 export async function spritesPacker(options: SpritePackerOptions) {
   await validateOptions(options);
   const { maxWidth, maxHeight, inputPath, outputPath, trim, padding } = options;
