@@ -2,7 +2,7 @@ import { MaxRectsPacker } from "maxrects-packer";
 import sharp from "sharp";
 import { getImageSize, isTrimmed, type ImageData } from "./images";
 import { resolve } from "path";
-import fs from "node:fs";
+import fs from "node:fs/promises";
 
 type AtlasSprite = {
   width: number;
@@ -23,6 +23,8 @@ type AtlasSprites = {
   };
 };
 
+export type TextureFormats = "webp" | "png";
+
 export type AtlasOptions = {
   maxWidth: number;
   maxHeight: number;
@@ -30,6 +32,7 @@ export type AtlasOptions = {
   trim: boolean;
   outputPath: string;
   atlasName: string;
+  textureFormat: TextureFormats;
 };
 
 export async function createAtlas(images: ImageData[], options: AtlasOptions) {
@@ -69,6 +72,7 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
   });
 
   packer.addArray(packerData);
+
   for (let i = 0; i < packer.bins.length; i++) {
     const bin = packer.bins[i];
     const imagesToPack: { input: Buffer; top: number; left: number }[] = [];
@@ -100,19 +104,25 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
     }
 
     const atlasName = `${options.atlasName}_atlas-${i}`;
-    const atlasTextureName = `${atlasName}.webp`;
+    const atlasTextureName = `${atlasName}.${options.textureFormat}`;
     const atlasConfigName = `${atlasName}.json`;
-    const atlas = await sharp({
+    let atlas = sharp({
       create: {
         width: bin.width,
         height: bin.height,
         channels: 4,
         background: { r: 0, g: 0, b: 0, alpha: 0 },
       },
-    })
-      .composite(imagesToPack)
-      .webp()
-      .toFile(resolve(options.outputPath, atlasTextureName));
+    }).composite(imagesToPack);
+
+    if (options.textureFormat === "webp") {
+      atlas = atlas.webp();
+    } else {
+      atlas = atlas.png();
+    }
+
+    //Save Texture atlas to file
+    const result = await atlas.toFile(resolve(options.outputPath, atlasTextureName));
     console.log(`New Atlas: ${atlasTextureName} - width: ${bin.width} height: ${bin.height}`);
     const atlasConfigFile = {
       frames: {
@@ -126,6 +136,7 @@ export async function createAtlas(images: ImageData[], options: AtlasOptions) {
         size: { w: bin.width, h: bin.height },
       },
     };
-    fs.writeFileSync(resolve(options.outputPath, atlasConfigName), JSON.stringify(atlasConfigFile));
+
+    await fs.writeFile(resolve(options.outputPath, atlasConfigName), JSON.stringify(atlasConfigFile));
   }
 }

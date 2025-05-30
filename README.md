@@ -10,7 +10,7 @@ A lightweight and efficient Node.js tool for generating texture atlases from ima
 - **Transparent Border Trimming**: Automatically removes unnecessary transparent pixels around images
 - **Configurable Padding**: Add spacing between sprites to prevent texture bleeding
 - **Customizable Output**: Control dimensions, padding, and more with flexible options
-- **WebP Output**: Creates optimized WebP atlas images with corresponding JSON metadata
+- **Multiple Output Formats**: Support for PNG and WebP output formats
 
 ## Usage
 
@@ -29,6 +29,7 @@ await spritesPacker({
   maxHeight: 2048,
   padding: 2,
   trim: true,
+  textureFormat: "png", // 'png' or 'webp'
 });
 
 // Advanced usage with path resolution
@@ -41,8 +42,21 @@ await spritesPacker({
   maxHeight: 4096,
   padding: 4,
   trim: false,
+  textureFormat: "webp", // WebP format for better compression
 });
 ```
+
+### Configuration Options
+
+| Option          | Type    | Description                                                                                  |
+| --------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `inputPath`     | string  | Directory containing source images                                                           |
+| `outputPath`    | string  | Directory where atlas and metadata will be saved                                             |
+| `maxWidth`      | number  | Maximum width of generated atlas (min: 128px)                                                |
+| `maxHeight`     | number  | Maximum height of generated atlas (min: 128px)                                               |
+| `padding`       | number  | Number of pixels between sprites                                                             |
+| `trim`          | boolean | When true, removes transparent borders around sprites                                        |
+| `textureFormat` | string  | Output format - "png" for standard PNG with transparency or "webp" for optimized WebP format |
 
 ## Output Files
 

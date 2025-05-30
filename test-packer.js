@@ -8,4 +8,5 @@ spritesPacker({
   maxHeight: 2048,
   padding: 4,
   trim: true,
+  textureFormat: "png",
 });

@@ -1,6 +1,6 @@
 import path from "path";
 import { getImagesInDrectory, pathExist } from "./images";
-import { createAtlas } from "./atlas";
+import { createAtlas, TextureFormats } from "./atlas";
 import type { ImageData } from "./images";
 import { getImageData } from "./images";
 import { mkdir } from "fs/promises";
@@ -30,6 +30,12 @@ export type SpritePackerOptions = {
    * When true, transparent borders around sprites will be trimmed
    */
   trim: boolean;
+  /**
+   * Format of the output atlas texture
+   * - png: Standard PNG format with transparency support
+   * - 'webpg': WebP format with better compression ratios
+   */
+  textureFormat: TextureFormats;
 };
 
 /**
@@ -46,6 +52,7 @@ export type SpritePackerOptions = {
  * @param options.outputPath - Directory path where the atlas image and metadata will be saved
  * @param options.trim - When true, transparent borders around sprites will be trimmed
  * @param options.padding - Number of pixels to insert between sprites in the atlas
+ * @param options.textureFormat - png or webp
  *
  * @throws Will throw an error if the input directory contains no images
  * @throws Will throw an error if the options are invalid
@@ -54,7 +61,7 @@ export type SpritePackerOptions = {
  */
 export async function spritesPacker(options: SpritePackerOptions) {
   await validateOptions(options);
-  const { maxWidth, maxHeight, inputPath, outputPath, trim, padding } = options;
+  const { maxWidth, maxHeight, inputPath, outputPath, trim, padding, textureFormat } = options;
 
   const outPathExist = await pathExist(outputPath);
   if (!outPathExist) {
@@ -78,6 +85,7 @@ export async function spritesPacker(options: SpritePackerOptions) {
     outputPath,
     trim,
     atlasName: path.basename(inputPath),
+    textureFormat,
   });
 }
 
@@ -88,6 +96,16 @@ async function validateOptions(options: SpritePackerOptions) {
 
   if (options.maxHeight < 128) {
     throw new Error(`Maximum height must be greater than 128 pixels, got ${options.maxHeight}`);
+  }
+
+  const supportedTextureFormats = ["png", "webp"];
+  const isTextureFormatSupported = supportedTextureFormats.some((fmt) => fmt === options.textureFormat);
+  if (!isTextureFormatSupported) {
+    throw new Error(
+      `Texture format: ${options.textureFormat} not supported. currently we support only ${supportedTextureFormats.join(
+        ","
+      )}`
+    );
   }
 
   const inputPathExist = await pathExist(options.inputPath);
