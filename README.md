@@ -1,13 +1,13 @@
-# SpritePacker
+# SpritesPacker
 
-A lightweight and efficient Node.js tool for generating texture atlases from image collections with out of the box support for GPU Compressed textures.
+A lightweight and efficient Node.js tool for generating texture atlases from image collections with out-of-the-box support for GPU Compressed textures.
 SpritePacker helps game developers and web designers optimize performance by combining multiple images into a single texture atlas with corresponding metadata.
 
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
 ## Features
 
--   **Intelligent Packing**: Uses the MaxRects algorithm to efficiently organize sprites in the smallest possible atlas
+-   **Intelligent Packing**: Uses the MaxRects algorithm to organize sprites in the smallest possible atlas efficiently
 -   **GPU-Optimized Textures**: Support for Basis Universal supercompressed GPU format alongside PNG and WebP
 -   **Command-Line Interface**: Easy-to-use CLI tool for quick sprite packing
 -   **Low Dependencies**: We value a minimalist approach to dependencies, using only what’s strictly necessary.
@@ -16,11 +16,11 @@ SpritePacker helps game developers and web designers optimize performance by com
 
 SpritePacker offers Basis Universal texture compression, a "universal" GPU texture encoding format that can be transcoded to various GPU-specific formats:
 
-### Advantages of Basis Universal Format
+### Advantages of the Basis Universal Format
 
 -   **Cross-platform compatibility**: Supports nearly all modern GPUs and platforms
 -   **Dramatically reduced file sizes**: 2-5x smaller than PNG with minimal quality loss
--   **Reduced memory usage**: Textures remain compressed in GPU memory decreasing VRAM usage
+-   **Reduced memory usage**: Textures remain compressed in GPU memory, decreasing VRAM usage
 -   **Faster loading times**: Smaller file sizes mean quicker downloads and startup
 -   **Lower bandwidth consumption**: Essential for web, mobile games, and applications
 -   **Efficient GPU rendering**: Optimized for hardware-accelerated performance
