@@ -9,9 +9,8 @@ SpritePacker helps game developers and web designers optimize performance by com
 
 -   **Intelligent Packing**: Uses the MaxRects algorithm to efficiently organize sprites in the smallest possible atlas
 -   **GPU-Optimized Textures**: Support for Basis Universal supercompressed GPU format alongside PNG and WebP
--   **Transparent Border Trimming**: Automatically removes unnecessary transparent pixels around images
--   **Configurable Padding**: Add spacing between sprites to prevent texture bleeding
--   **Customizable Output**: Control dimensions, padding, and more with flexible options
+-   **Command-Line Interface**: Easy-to-use CLI tool for quick sprite packing
+-   **Low Dependencies**: We value a minimalist approach to dependencies, using only what’s strictly necessary.
 
 ## GPU Compressed Texture Support
 
@@ -35,7 +34,31 @@ SpritePacker offers Basis Universal texture compression, a "universal" GPU textu
 
 ## Usage
 
-You can use SpritePacker in your Node.js applications:
+You can use SpritePacker either as a CLI tool or in your Node.js applications:
+
+### Command-Line Interface (CLI)
+
+SpritePacker includes a convenient command-line tool for quick texture atlas generation:
+
+![CLI IMAGE](./docs/cli_img.png)
+
+```bash
+# Basic usage (in any directory)
+sprites-packer -i ./images
+
+# Specify output directory
+sprites-packer -i ./images -o ./atlas
+
+# Custom dimensions and format
+sprites-packer -i ./images -w 2048 -h 2048 -f webp
+
+# Full example with all options
+sprites-packer -i ./images -o ./atlas -w 4096 -h 4096 -f basis -p 2 -t
+```
+
+### Node.js Library
+
+You can also use SpritePacker programmatically in your Node.js applications:
 
 ```javascript
 const { spritesPacker } = require("sprites-packer");
@@ -50,7 +73,7 @@ await spritesPacker({
     maxHeight: 2048,
     padding: 2,
     trim: true,
-    textureFormat: "png", // 'png', 'webpg', or 'basis'
+    textureFormat: "png", // 'png', 'webp', or 'basis'
 });
 
 // Advanced usage with path resolution
@@ -69,15 +92,15 @@ await spritesPacker({
 
 ### Configuration Options
 
-| Option          | Type    | Description                                                                                                                                            |
-| --------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `inputPath`     | string  | Directory containing source images                                                                                                                     |
-| `outputPath`    | string  | Directory where atlas and metadata will be saved                                                                                                       |
-| `maxWidth`      | number  | Maximum width of generated atlas (min: 128px)                                                                                                          |
-| `maxHeight`     | number  | Maximum height of generated atlas (min: 128px)                                                                                                         |
-| `padding`       | number  | Number of pixels between sprites                                                                                                                       |
-| `trim`          | boolean | When true, removes transparent borders around sprites                                                                                                  |
-| `textureFormat` | string  | Output format:<br>- "png": Standard PNG with transparency<br>- "webpg": WebP for better compression<br>- "basis": Basis Universal GPU-optimized format |
+| Option          | Type    | Description                                                                                                                                           |
+| --------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `inputPath`     | string  | Directory containing source images                                                                                                                    |
+| `outputPath`    | string  | Directory where atlas and metadata will be saved                                                                                                      |
+| `maxWidth`      | number  | Maximum width of generated atlas (min: 128px)                                                                                                         |
+| `maxHeight`     | number  | Maximum height of generated atlas (min: 128px)                                                                                                        |
+| `padding`       | number  | Number of pixels between sprites                                                                                                                      |
+| `trim`          | boolean | When true, removes transparent borders around sprites                                                                                                 |
+| `textureFormat` | string  | Output format:<br>- "png": Standard PNG with transparency<br>- "webp": WebP for better compression<br>- "basis": Basis Universal GPU-optimized format |
 
 ## Output Files
 

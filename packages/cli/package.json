@@ -5,13 +5,12 @@
     "types": "./dist/index.d.ts",
     "type": "commonjs",
     "bin": {
-        "sprites-packer": "bin/index.js"
+        "sprites-packer": "dist/index.js"
     },
     "license": "MIT",
     "scripts": {
         "dev": "tsc -p tsconfig.json --watch",
         "build": "tsc -p tsconfig.json",
-        "start": "node dist/index.js",
         "clean": "rm -rf ./dist"
     },
     "packageManager": "npm@10.2.3",
@@ -22,5 +21,8 @@
     "devDependencies": {
         "@types/node": "^24.0.1",
         "typescript": "^5.8.3"
+    },
+    "dependencies": {
+        "sprites-packer": "1.0.0"
     }
 }
