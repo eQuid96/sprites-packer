@@ -1,3 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
+import { CLI } from "./cli";
 
-console.log("sprites-packer CLI :D");
+CLI(process.argv.slice(2));
