@@ -1,27 +1,23 @@
 {
-  "name": "sprites-packer",
-  "version": "1.0.0",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "type": "commonjs",
-  "license": "MIT",
-  "scripts": {
-    "dev": "tsc -p tsconfig.json --watch",
-    "build": "tsc -p tsconfig.json",
-    "start": "node test-packer.js",
-    "clean": "rm -r ./dist"
-  },
-  "packageManager": "npm@10.2.3",
-  "author": {
-    "name": "eQuid96",
-    "url": "https://github.com/eQuid96"
-  },
-  "devDependencies": {
-    "@types/node": "^24.0.1",
-    "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "maxrects-packer": "^2.7.3",
-    "sharp": "^0.33.2"
-  }
+    "name": "sprites-packer-tools",
+    "version": "1.0.0",
+    "license": "MIT",
+    "scripts": {
+        "dev": "turbo dev",
+        "build": "turbo build",
+        "start": "turbo start",
+        "clean": "turbo clean"
+    },
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "packageManager": "npm@10.2.3",
+    "author": {
+        "name": "eQuid96",
+        "url": "https://github.com/eQuid96"
+    },
+    "devDependencies": {
+        "turbo": "^2.5.4"
+    }
 }
