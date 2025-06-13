@@ -23,9 +23,9 @@ export async function getImagesInDrectory(dirPath: string) {
             }
             if (validExtensions.some((ext) => file.name.endsWith(ext))) {
                 result.push({
-                    path: file.path,
+                    path: file.parentPath,
                     name: file.name,
-                    fullPath: join(file.path, file.name),
+                    fullPath: join(file.parentPath, file.name),
                 });
             }
         }
