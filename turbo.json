@@ -15,7 +15,8 @@
         "start": {
             "dependsOn": [
                 "build"
-            ]
+            ],
+            "cache": false
         },
         "dev": {
             "persistent": true,
