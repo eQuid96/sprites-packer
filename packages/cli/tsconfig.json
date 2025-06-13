@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "ES2018",
+        "lib": ["ES2018"],
+        /* Modules */
+        "module": "CommonJS",
+        "rootDir": "./src",
+        "declaration": true,
+        "sourceMap": false,
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
+        "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+        "noImplicitOverride": true /* Ensure overriding members in derived classes are marked with an override modifier. */,
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */
+    }
+}

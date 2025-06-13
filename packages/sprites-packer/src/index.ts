@@ -79,7 +79,8 @@ export async function spritesPacker(options: SpritePackerOptions) {
         const metaData = await getImageData(img.fullPath);
         data.push(metaData);
     }
-    const atlas = await createAtlas(data, {
+
+    await createAtlas(data, {
         maxWidth,
         maxHeight,
         padding: Math.max(padding, 0),
