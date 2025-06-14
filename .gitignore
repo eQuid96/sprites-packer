@@ -3,6 +3,7 @@ media/
 output/
 .DS_Store
 dist/
+out/
 
 # Logs
 logs

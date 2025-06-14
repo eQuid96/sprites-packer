@@ -1,0 +1,34 @@
+{
+    "name": "sprites-packer-app",
+    "version": "1.0.0",
+    "license": "MIT",
+    "main": "./out/main/index.js",
+    "type": "module",
+    "description": "A lightweight and tool for generating texture atlases from image collections with out-of-the-box support for GPU Compressed textures.",
+    "scripts": {
+        "start": "electron-vite preview",
+        "dev": "electron-vite dev --watch",
+        "build": "electron-vite build",
+        "build:mac": "npm run build && electron-builder --mac"
+    },
+    "private": true,
+    "author": {
+        "name": "eQuid96",
+        "url": "https://github.com/eQuid96"
+    },
+    "devDependencies": {
+        "@types/node": "^24.0.1",
+        "@types/react": "^19.1.8",
+        "@types/react-dom": "^19.1.6",
+        "@vitejs/plugin-react": "^4.5.2",
+        "electron": "36.4.0",
+        "electron-builder": "^26.0.12",
+        "electron-vite": "^3.1.0",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.5"
+    },
+    "dependencies": {
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+    }
+}
